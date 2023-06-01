@@ -61,8 +61,7 @@ int pictureNumber = 0;
 
 #define uS_TO_S_FACTOR 1000000
 
-const int ledPin = 23;
-
+  
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
   Serial.begin(115200);
@@ -267,8 +266,6 @@ String timeStamp;
   String currentDate = String(currYear) + String(currMonth) + String(currDay) + "-" + String(currHour) + String(currMin) + String(currSec);
 
 
-
-
   const char* myDomain = "script.google.com";
   String getAll="", getBody = "";
   
@@ -295,9 +292,9 @@ String timeStamp;
       base64_encode(output, (input++), 3);
       if (i%3==0) imageFile += urlencode(String(output));
     }
-    String Data = "myFoldername=ESP32-CAM&myFilename=" + currentDate + ".jpg" + myImage;
+    String Data = "myFoldername=ESP32-CAM&mySecret=" + secret + "&myFilename=" + currentDate + ".jpg&myFile=";
     
-    client_tcp.println("POST " + gScriptUrl + " HTTP/1.1");
+    client_tcp.println("POST " + myScript + " HTTP/1.1");
     client_tcp.println("Host: " + String(myDomain));
     client_tcp.println("Content-Length: " + String(Data.length()+imageFile.length()));
     client_tcp.println("Content-Type: application/x-www-form-urlencoded");
